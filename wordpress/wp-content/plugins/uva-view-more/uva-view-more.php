@@ -30,7 +30,7 @@ function mhplg_query_render_block( $block_content, $block ) {
 		$custom_posts->query('post_type=post');
 		$block['attrs']['query']['pages'] = ceil($custom_posts->post_count/$block['attrs']['query']['perPage']);
     $jsonblock = json_encode( $block );
-    $jsonblock = str_replace("[view_more_button]",  addslashes(uva_f_return_view_more_button()), $jsonblock);
+    $jsonblock = str_replace("[view_more_button]",  wp_slash(uva_f_return_view_more_button()), $jsonblock);
 		$block_content = substr_replace( $block_content, ' data-paged="' . esc_attr( $paged ) . '" data-attrs="' . esc_attr( $jsonblock ) . '"', $container_end, 0 );
 	}
 	return $block_content;
@@ -48,7 +48,6 @@ function uva_f_return_view_more_button( ) {
 	$block_content = sprintf( '<a href="#" class="view-more-query button">%s</a>', esc_html__( 'View More' ) );
 	return $block_content;
 }
-
 add_shortcode( 'view_more_button', 'uva_f_return_view_more_button' );
 
 /**
