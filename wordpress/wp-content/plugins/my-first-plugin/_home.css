@@ -59,13 +59,33 @@
 .is-style-pull-out .wp-block-image img {
     width: 100%;
     height: auto;
+/*    overflow: hidden;
+    display: inline-block;*/
 }
 
+.is-style-pull-out .wp-block-image {
+    width: 100%;
+    margin-left: 0;
+/*    overflow: hidden;
+    display: inline-block;*/
+}
+@media (min-width: 1190px) {
+    .is-style-pull-out .wp-block-image {
+        width: calc(100% + (100vw - 1190px) / 2);
+        margin-left: calc((100vw - 1190px) / -2);
+    }
+    .is-style-pull-out .wp-block-image img {
+        width: calc(100% + (100vw - 1190px + 2 * 1.5rem) / 2);
+    }
+}
 .is-style-fullwidth-boxed>* {
     margin-left: 0;
 }
 
 @media (min-width: calc(1190px + 2 * 1.5rem)) {
+    .is-style-pull-out .wp-block-image img {
+        width: calc(100% + (100vw - 1190px + 2 * 1.5rem) / 2);
+    }
     .is-style-fullwidth-boxed>* {
         max-width: calc(1190px - 2 * 1.5rem);
         margin-left: calc((100vw - 1190px) / 2);
