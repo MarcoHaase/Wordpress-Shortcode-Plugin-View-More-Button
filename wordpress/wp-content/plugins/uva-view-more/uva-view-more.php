@@ -23,19 +23,27 @@ if ( ! defined( 'WPINC' ) ) {
 function mhplg_query_render_block( $block_content, $block ) {
 	if ( 'core/query' === $block['blockName'] ) {
 		$query_id      = $block['attrs']['queryId'];
+		$posts_per_page = $block['attrs']['query']['perPage'];
 		$container_end = strpos( $block_content, '>' );
 
 		$paged = absint( $_GET[ 'query-' . $query_id . '-page' ] ?? 1 );
 		$custom_posts = new WP_Query();
 		$custom_posts->query('post_type=post');
-		$block['attrs']['query']['pages'] = ceil($custom_posts->post_count/$block['attrs']['query']['perPage']);
-	    $jsonblock = wp_json_encode( $block );
-		$jsonblock = do_shortcode($jsonblock);
-		$block_content = substr_replace( $block_content, ' data-paged="' . esc_attr( $paged ) . '" data-attrs="' . esc_attr( $jsonblock ) . '"', $container_end, 0 );
+		$number_of_posts = $custom_posts->post_count;
+
+		$block['attrs']['query']['pages'] = ceil($number_of_posts / $posts_per_page);
+	    $jsonblock = do_shortcode(wp_json_encode( $block ));
+		$block_content = substr_replace( 
+			$block_content, 
+			' data-paged="' . esc_attr( $paged ) . '" data-attrs="' . esc_attr( $jsonblock ) . '"', 
+			$container_end, 
+			0
+		);
 	}
 	return $block_content;
 }
 \add_filter( 'render_block', __NAMESPACE__ . '\mhplg_query_render_block', 10, 2 );
+
 function uva_f_return_view_more_button( $atts = [], $content = null, $tag = '' ) {
 	$atts = array_change_key_case( (array) $atts, CASE_LOWER );
 	$a = shortcode_atts( array(
@@ -43,6 +51,7 @@ function uva_f_return_view_more_button( $atts = [], $content = null, $tag = '' )
 		"div_class" => "wp-block-query-vm-button",
 		"button_text" => "View More",
 	), $atts, $tag );
+	// wegen json_encode müssen die attribute in den tags mit '' gesetzt werden. nicht mit ""
 	$block_content = sprintf( "<div class='%s'><a href='%s' class='view-more-query button'>%s</a></div>", 
 		esc_attr( $a['div_class'] ),
 		esc_attr( $a['link'] ),
