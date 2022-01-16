@@ -10,7 +10,7 @@
 
 			const block = JSON.parse( queryEl.attr( 'data-attrs' ) );
 			const maxPages = block.attrs.query.pages || 0;
-
+			self.hide();
 			$.ajax( {
 				url: window.location.href,
 				dataType: 'json html',
@@ -37,6 +37,7 @@
 
 							if ( html.length ) {
 								postTemplateEl.append( html );
+								self.show();
 								return;
 							}
 						}
