@@ -7,24 +7,43 @@
         padding: 0;
     }
     .container {
-        max-width: 1200px; 
-        height: calc(100vh - 60px);
-        border: 0; 
-        background: red;
-        margin: 30 auto;
-    }
-    .block {
-        width:calc(100vw - 20px); 
-        height: 100px;
-        border: 10px solid green; 
-        background: blue;
-    }
-    @media (min-width: 1200px) {
-        .block {
-            margin-left: calc((100vw - 1200px) / -2);
-        }
+        max-width: 1110px; 
     }
 
+    .is-style-fullwidth-boxed {
+        width:100vw; 
+        margin-left: -15px;
+    }
+    .is-style-fullwidth-boxed {
+        margin-right: -1.5rem;/*entfernen, muss 0 sein*/
+    }
+    @media (min-width: calc(1110px + 2 * 15px)) {
+        .is-style-fullwidth-boxed {
+            margin-left: calc((100vw - 1110px) / -2);
+        }
+    }
+    
+    .is-style-pull-out:first-child {
+        margin-left: calc((2 * 1.5rem) / -2);
+        padding-left: 15px; /*entfernen, muss 0 sein _blocks.scss*/
+        padding-left: calc((100vw - 1110px) / 2); /*entfernen, muss 0 sein*/
+        padding-left: 50px; /*entfernen, muss 0 sein _editor.scss*/
+    }
+
+
+    .wp-block-image img {
+        height: auto;
+    }
+
+
+    .wp-block-column:not(:first-child) {
+        margin-left: 0;
+    }
+
+
+    .is-style-pull-out:first-child {
+        margin-right: 2em; /*entfernen, muss 0 sein _blocks.scss*/
+    }
 </style>
 <div class="container">
     <div class="block">
