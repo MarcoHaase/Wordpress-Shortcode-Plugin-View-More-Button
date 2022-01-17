@@ -102,3 +102,8 @@
         margin-left: calc((100vw - 780px) / 2);
     }
 }
+
+.is-style-flex-columns .wp-block-column {
+      max-width: 50%;
+      margin: 0 auto;
+}
